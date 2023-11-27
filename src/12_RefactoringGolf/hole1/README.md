@@ -20,3 +20,7 @@ Change the code in hole 3 to be identical to the code on hole 4, both implenenta
     - Check code coverage has not dropped
 - Commit after each refactor
 - In case of persistent test fails, use `git reset` to go back to green
+
+## Name
+-Dias Flavien
+-Petit Auxence
