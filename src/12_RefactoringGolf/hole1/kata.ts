@@ -1,6 +1,10 @@
 
 const EMPTY_SYMBOL = ' ';
 const PLAYER_O = 'O';
+const ERROR_FIRST_PLAYER = 'Invalid first player';
+const ERROR_NEXT_PLAYER = 'Invalid next player';
+const ERROR_INVALID_POSITION = 'Invalid position';
+
 export class Game {
   private _lastSymbol = EMPTY_SYMBOL;
   private _board: Board = new Board();
@@ -17,20 +21,20 @@ export class Game {
   private validateFirstMove(player: string) {
     if (this._lastSymbol == EMPTY_SYMBOL) {
       if (player == PLAYER_O) {
-        throw new Error('Invalid first player');
+        throw new Error(ERROR_FIRST_PLAYER);
       }
     }
   }
 
   private validatePlayer(player: string) {
     if (player == this._lastSymbol) {
-      throw new Error('Invalid next player');
+      throw new Error(ERROR_NEXT_PLAYER);
     }
   }
 
   private validatePositionIsEmpty(x: number, y: number) {
     if (this._board.TileAt(x, y).Symbol != EMPTY_SYMBOL) {
-      throw new Error('Invalid position');
+      throw new Error(ERROR_INVALID_POSITION);
     }
   }
 
