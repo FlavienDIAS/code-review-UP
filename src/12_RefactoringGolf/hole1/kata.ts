@@ -10,6 +10,8 @@ const LINE2:number = 2;
 const COLUMN0:number = 0;
 const COLUMN1:number = 1;
 const COLUMN2:number = 2;
+const BOARD_SIZE:number = 3;
+
 export class Game {
   private _lastSymbol = EMPTY_SYMBOL;
   private _board: Board = new Board();
@@ -123,9 +125,9 @@ class Board {
   private _plays: Tile[] = [];
 
   constructor() {
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
-        const tile: Tile = { X: i, Y: j, Symbol: EMPTY_SYMBOL };
+    for (let line = LINE0; line < BOARD_SIZE; line++) {
+      for (let col = COLUMN0; col < BOARD_SIZE; col++) {
+        const tile: Tile = { X: line, Y: col, Symbol: EMPTY_SYMBOL };
         this._plays.push(tile);
       }
     }
