@@ -20,7 +20,7 @@ export class Game {
     this.validatePositionIsEmpty(x, y);
 
     this.updateLastPlayer(symbol);
-    this.updateBoard(symbol, x, y);
+    this._board.AddTileAt(symbol, x, y);
   }
 
   private validateFirstMove(player: string) {
@@ -47,40 +47,20 @@ export class Game {
     this._lastSymbol = player;
   }
 
-  private updateBoard(player: string, x: number, y: number) {
-    this._board.AddTileAt(player, x, y);
-  }
-
   public Winner(): string {
-    if (this.isRowFull(firstRow) && this.isRowFullWithSameSymbol(firstRow)) {
+    if (this._board.isRowFull(firstRow) && this._board.isRowFullWithSameSymbol(firstRow)) {
       return this._board.TileAt(firstRow, firstColumn)!.Symbol;
     }
 
-    if (this.isRowFull(secondRow) && this.isRowFullWithSameSymbol(secondRow)) {
+    if (this._board.isRowFull(secondRow) && this._board.isRowFullWithSameSymbol(secondRow)) {
       return this._board.TileAt(secondRow, firstColumn)!.Symbol;
     }
 
-    if (this.isRowFull(thirdRow) && this.isRowFullWithSameSymbol(thirdRow)) {
+    if (this._board.isRowFull(thirdRow) && this._board.isRowFullWithSameSymbol(thirdRow)) {
       return this._board.TileAt(thirdRow, firstColumn)!.Symbol;
     }
 
     return emptyPlay;
-  }
-
-  private isRowFull(row: number) {
-    return (
-      this._board.TileAt(row, firstColumn)!.Symbol != emptyPlay &&
-      this._board.TileAt(row, secondColumn)!.Symbol != emptyPlay &&
-      this._board.TileAt(row, thirdColumn)!.Symbol != emptyPlay
-    );
-  }
-
-  private isRowFullWithSameSymbol(row: number) {
-    return (
-      this._board.TileAt(row, firstColumn)!.Symbol ==
-        this._board.TileAt(row, secondColumn)!.Symbol &&
-      this._board.TileAt(row, thirdColumn)!.Symbol == this._board.TileAt(row, secondColumn)!.Symbol
-    );
   }
 }
 
@@ -107,6 +87,22 @@ class Board {
   }
 
   public AddTileAt(symbol: string, x: number, y: number): void {
-    this._plays.find((t: Tile) => t.X == x && t.Y == y)!.Symbol = symbol;
+    this.TileAt(x, y).Symbol = symbol;
+  }
+
+  public isRowFull(row: number): boolean {
+    return (
+        this.TileAt(row, firstColumn).Symbol != emptyPlay &&
+        this.TileAt(row, secondColumn).Symbol != emptyPlay &&
+        this.TileAt(row, thirdColumn).Symbol != emptyPlay
+    );
+  }
+
+  public isRowFullWithSameSymbol(row: number): boolean {
+    return (
+        this.TileAt(row, firstColumn).Symbol ==
+        this.TileAt(row, secondColumn).Symbol &&
+        this.TileAt(row, thirdColumn).Symbol == this.TileAt(row, secondColumn).Symbol
+    );
   }
 }
